@@ -1,0 +1,21 @@
+
+# creating Plot 4
+par(mfrow = c(2,2), oma = c(0,0,2,0))
+mtext("Plot 4", outer = TRUE, adj = 0 )
+plot(DF$datetime , DF$Global_active_power , xlab= "", ylab = "Global Active Power(kilowatts)", type = "s", lty = 1, lwd = 1) 
+
+plot(DF$datetime , DF$Voltage , xlab= "datetime", ylab = "Voltage", type = "s", lty = 1, lwd = 1)
+
+leg = names(DF)
+plot(DF$datetime , DF$Sub_metering_1 , xlab= "", lty = 1, lwd = 1, ylab = "Energy sub metering", type = "n") 
+lines(DF$datetime,DF$Sub_metering_1)
+lines(DF$datetime,DF$Sub_metering_2, col = "red", lty = 1, lwd = 1)
+lines(DF$datetime,DF$Sub_metering_3, col = "blue", lty = 1, lwd = 1)
+legend("topright", lty = 1, lwd = 1, col = c("black","red", "blue"), legend = leg[7:9], box.lty = 0,  cex=0.5)
+
+plot(DF$datetime , DF$Global_reactive_power , ylab= "Global_reactive_power",  xlab= "datetime", type = "s", pch = ".", lty = 1, lwd = 1)
+
+dev.copy(png, file = "plot4.png", width = 480, height = 480)
+dev.off()
+
+

@@ -1,0 +1,32 @@
+# connection to zip file 
+newdata_dir <- './R/datasciencecoursera/Exploratory Data/datadir'
+raw_data_path <- 'C:/Users/Julian Zamudio/Documents/R/datasciencecoursera/Exploratory Data/power.zip'
+
+if (!file.exists(newdata_dir)) {
+    dir.create(newdata_dir)
+    unzip(zipfile = raw_data_path, exdir = newdata_dir)
+}
+
+# Creating the data set
+
+library(data.table)
+library(sqldf)
+library(lubridate)
+library(dplyr)
+
+setwd(newdata_dir)
+fn <- "household_power_consumption.txt"
+DF1 <- read.csv.sql(fn, sep = ";", sql = "select * from file where Date = '1/2/2007'")
+DF2 <- read.csv.sql(fn, sep = ";", sql = "select * from file where Date = '2/2/2007'" )
+DF <- rbind(DF1, DF2)
+any(DF == "?")
+DF$datetime = paste(DF$Date,DF$Time )
+DF$datetime= strptime(DF$datetime, "%d/%m/%Y %H:%M:%S")
+
+# creating Graph 1
+
+par(oma = c(0,0,2,0))
+hist(DF$Global_active_power, col = "red", xlab = "Global Active Power(kilowatts)",main = "Global Active Power") 
+mtext("Plot 1", outer = TRUE, adj = 0 )
+dev.copy(png, file = "plot1.png", width = 480, height = 480)
+dev.off()

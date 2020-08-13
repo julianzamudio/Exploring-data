@@ -1,0 +1,8 @@
+
+# creating Plot 2
+
+par(oma = c(0,0,2,0))
+plot(DF$datetime , DF$Global_active_power , xlab= "", ylab = "Global Active Power(kilowatts)", type = "s", lty = 1, lwd = 1) 
+mtext("Plot 2", outer = TRUE, adj = 0 )
+dev.copy(png, file = "plot2.png", width = 480, height = 480)
+dev.off()
